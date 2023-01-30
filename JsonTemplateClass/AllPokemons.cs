@@ -3,7 +3,7 @@
     public int count { get; set; }
     public string next { get; set; }
     public object previous { get; set; }
-    public Result[] results { get; set; }
+    public List<Result> results { get; set; }
 }
 
 public class Result

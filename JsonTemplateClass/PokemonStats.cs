@@ -1,6 +1,7 @@
 ﻿public class PokemonStats
 {
-    public Ability[] abilities { get; set; }
+    public List<Ability> abilities { get; set; }
+    #region ignore
     public int base_experience { get; set; }
     public Form[] forms { get; set; }
     public Game_Indices[] game_indices { get; set; }
@@ -18,7 +19,7 @@
     public Stat[] stats { get; set; }
     public Type[] types { get; set; }
     public int weight { get; set; }
-
+    #endregion
 }
 
 #region ignore
