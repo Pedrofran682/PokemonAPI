@@ -39,35 +39,16 @@ var response = await client.GetAsync(request);
 //{
 //    item.ShowAbility();
 //}
-bool flag = true;
 Menu gameMenu = new Menu();
-Console.WriteLine(@$"============================== Virtual Pokemon Pet ==============================");
 
-Console.WriteLine($@"
-1 - Adoption of a Pokemon
-2 - My Pokemons
-3 - Quit");
-while (flag)
+
+
+while (gameMenu.gameRunnig)
 {
-    string option = Console.ReadLine();
+    gameMenu.StartMenu();
 
-    switch (option)
-    {
-        case "1":
-            int index = await gameMenu.ChoosePokemonAsync();
-            Console.WriteLine($"Index escolhido {index}");
-            break;
-        case "2":
-            gameMenu.MyPokemons();
-            break;
-        case "3":
-            Console.WriteLine("Closing...");
-            Thread.Sleep(1000);
-            flag = gameMenu.CloseGame();
-            break;
-    }
 
-    //Console.ReadKey();
+
 }
 
 

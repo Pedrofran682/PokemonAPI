@@ -1,4 +1,5 @@
 ﻿using RestSharp;
+using System;
 using System.Text.Json;
 using VirtualPetPokemon.API;
 
@@ -7,16 +8,51 @@ namespace VirtualPetPokemon.TerminalInterface
     public  class Menu
     {
         public  bool flag { get; private set; }
+        public bool gameRunnig { get; private set; } = true;
+        public List<MyPokemon> ListOfMyPokemons { get; set; }
 
-        public  void StartMenu()
+        public  async void StartMenu()
         {
+            #region Print Menu
+            Console.WriteLine(@$"============================== Virtual Pokemon Pet ==============================");
+            Console.WriteLine($@"
+1 - Adoption of a Pokemon
+2 - My Pokemons
+3 - Quit");
+            #endregion
 
+            Console.Write("What will you do? ");
             string option = Console.ReadLine();
 
             switch (option)
             {
                 case "1":
-                    ChoosePokemonAsync();
+                    MyPokemon newPokemon = await ChoosePokemonAsync();
+
+                    var pokemonInfos = new PokemonRequest();
+                    // To avoid multiples requests, lets define the parameters
+                    pokemonInfos.GetPokemonStatAsync(newPokemon);
+
+                    var do2Pokemon = "2";
+                    while (do2Pokemon == "1" || do2Pokemon == "2")
+                    {
+                        Console.Write(@"
+1 - See Pomekom info.
+2 - Adopt 
+3 - Leave");
+                        do2Pokemon = Console.ReadLine();
+
+                        if(do2Pokemon == "1") // Show Pokemon info
+                        {
+                            newPokemon.ShowPokemonStatus();
+                        }
+                        if(do2Pokemon == "2") // Adopt Pokemon
+                        {
+                            Console.WriteLine($"Congrats!!! You have adopted {newPokemon.Name}");
+                            ListOfMyPokemons.Add(newPokemon);
+                        }
+                    }
+                    
                     break;
                 case "2":
                     MyPokemons();
@@ -28,12 +64,19 @@ namespace VirtualPetPokemon.TerminalInterface
 
             }
 
+
+
             Console.ReadKey();
         }
 
-        public  bool CloseGame()
+        public void AdoptionOfPokemon(MyPokemon newPokemon)
         {
-            return false;
+
+        }
+
+        public void CloseGame()
+        {
+            this.gameRunnig = false;
         }
 
         public  void MyPokemons()
@@ -41,21 +84,26 @@ namespace VirtualPetPokemon.TerminalInterface
             throw new NotImplementedException();
         }
 
-        public async Task<int> ChoosePokemonAsync()
+        public async Task<MyPokemon> ChoosePokemonAsync()
         {
             Console.WriteLine(@"
 Hello! Below we have a list of Pokemons. Next to each name we have a number that 
             will represent each one.Type a number to choose your new friend!");
+            MyPokemon myPokemon = new MyPokemon();
 
             var allPokemonsInfos = new PokemonRequest();
             var listOfPokemons = await allPokemonsInfos.GetAllPokemonsAsync();
 
             for (int index = 0; index < listOfPokemons.Count; index++)
             {
-                Console.WriteLine($"{index + 1}\t{listOfPokemons[index].name}");
+                Console.WriteLine($"{index}\t{listOfPokemons[index].name}");
             };
+            Console.Write("Choose your friend! ");
             int indexMyPokemon = int.Parse(Console.ReadLine());
-            return indexMyPokemon;
+            myPokemon.Name = listOfPokemons[indexMyPokemon].name;
+            myPokemon.InfoUrl = listOfPokemons[indexMyPokemon].url;
+
+            return myPokemon;
 
         }
 
