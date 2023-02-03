@@ -1,7 +1,7 @@
 ﻿using System;
 using RestSharp;
-using VirtualPetPokemon;
 using VirtualPetPokemon.API;
+using VirtualPetPokemon.JsonTemplateClass;
 using VirtualPetPokemon.TerminalInterface;
 
 
@@ -10,7 +10,8 @@ MyPokemon ChoosePokemon()
     Console.WriteLine(@$"==============================================================================");
     Console.WriteLine(@"
 Hello! Below we have a list of Pokemons. Next to each name we have a number that 
-            will represent each one.Type a number to choose your new friend!");
+will represent each one.Type a number to choose your new friend!
+");
     MyPokemon myPokemon = new MyPokemon();
 
     var allPokemonsInfos = new PokemonRequest(); // Reasponsible for make the request
@@ -26,25 +27,27 @@ Hello! Below we have a list of Pokemons. Next to each name we have a number that
     Console.Write("Choose your friend! ");
     int indexMyPokemon = int.Parse(Console.ReadLine());
     // Saves the chosen pokemon info
+
     myPokemon.Name = listOfPokemons[indexMyPokemon].name;
     myPokemon.InfoUrl = listOfPokemons[indexMyPokemon].url;
+
+    Console.WriteLine($"\nYou have chosen {myPokemon.Name}!");
 
     return myPokemon;
 
 }
-
+Pokedex myPokedex = new Pokedex();
 bool runGame = true;
 while (runGame)
 {
     #region Print Menu
     Console.WriteLine(@$"============================== Virtual Pokemon Pet ==============================");
     Console.WriteLine($@"
-1 - Adoption of a Pokemon
+1 - Adopt of a Pokemon
 2 - My Pokemons
 3 - Quit");
     #endregion
 
-    Pokedex myPokedex = new Pokedex();
     Console.Write("What will you do? ");
     string option = Console.ReadLine();
 
@@ -60,8 +63,8 @@ while (runGame)
             var do2Pokemon = "2";
             while (do2Pokemon == "1" || do2Pokemon == "2")
             {
-                Console.WriteLine(@$"==============================================================================");
                 Console.Write(@"
+What you will do?
 1 - See Pomekom info.
 2 - Adopt 
 3 - Leave
@@ -74,14 +77,14 @@ while (runGame)
                 }
                 if (do2Pokemon == "2") // Adopt Pokemon
                 {
-                    Console.WriteLine($"Congrats!!! You have adopted {newPokemon.Name}");
+                    Console.WriteLine($"Congrats!!! You adopted {newPokemon.Name}");
                     myPokedex.MyListOfPokemons.Add(newPokemon);
                     break;
                 }
             }
             break;
         case "2":
-            // Print my pokemons
+            myPokedex.ShowMyPokemons();
             break;
 
         case "3":
