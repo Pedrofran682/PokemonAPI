@@ -14,7 +14,8 @@ namespace VirtualPetPokemon.API
         {
             var client = new RestClient("https://pokeapi.co/api/v2/pokemon/");
             var request = new RestRequest($"{path}");
-            return await client.GetAsync(request);
+            var response =  await client.GetAsync(request);
+            return response;
         }
 
         public async Task<List<Result>> GetAllPokemonsAsync()
@@ -25,9 +26,10 @@ namespace VirtualPetPokemon.API
             return list;
         }
 
-        public async void GetPokemonStatAsync(MyPokemon pokemon)
+        public void GetPokemonStat(MyPokemon pokemon)
         {
-            var response = await requestAPIAsync($"{pokemon.InfoUrl}/");
+            var taskResponse = requestAPIAsync($"{pokemon.Name}/");
+            var response = taskResponse.Result;
             PokemonStats? allInfo = JsonSerializer.Deserialize<PokemonStats>(response.Content);
 
             pokemon.weight = allInfo.weight;
