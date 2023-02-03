@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace VirtualPetPokemon.TerminalInterface
 {
-    internal class Pokedex
+    public class Pokedex
     {
 
-        List<MyPokemon> pokemons = new List<MyPokemon>();
+        public List<MyPokemon> MyListOfPokemons = new List<MyPokemon>();
     }
 }

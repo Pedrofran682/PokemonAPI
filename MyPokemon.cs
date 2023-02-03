@@ -14,11 +14,11 @@ namespace VirtualPetPokemon
 
         public void ShowPokemonStatus()
         {
-            Console.WriteLine(@$"-----------------------------------------
-Name:{this.Name}
+            Console.WriteLine(@$"==============================================================================");
+            Console.WriteLine(@$"Name:{this.Name}
 Height:{this.height}
 Weight:{this.weight}");
-            foreach (var nAbility in this.abilities) Console.WriteLine($"{nAbility}\t");
+            foreach (var nAbility in this.abilities) Console.Write($"{nAbility}\t");
         }
     }
 }

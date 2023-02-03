@@ -7,6 +7,7 @@ using VirtualPetPokemon.TerminalInterface;
 
 MyPokemon ChoosePokemon()
 {
+    Console.WriteLine(@$"==============================================================================");
     Console.WriteLine(@"
 Hello! Below we have a list of Pokemons. Next to each name we have a number that 
             will represent each one.Type a number to choose your new friend!");
@@ -43,6 +44,7 @@ while (runGame)
 3 - Quit");
     #endregion
 
+    Pokedex myPokedex = new Pokedex();
     Console.Write("What will you do? ");
     string option = Console.ReadLine();
 
@@ -58,6 +60,7 @@ while (runGame)
             var do2Pokemon = "2";
             while (do2Pokemon == "1" || do2Pokemon == "2")
             {
+                Console.WriteLine(@$"==============================================================================");
                 Console.Write(@"
 1 - See Pomekom info.
 2 - Adopt 
@@ -72,7 +75,8 @@ while (runGame)
                 if (do2Pokemon == "2") // Adopt Pokemon
                 {
                     Console.WriteLine($"Congrats!!! You have adopted {newPokemon.Name}");
-                    //ListOfMyPokemons.Add(newPokemon);
+                    myPokedex.MyListOfPokemons.Add(newPokemon);
+                    break;
                 }
             }
             break;
